@@ -54,8 +54,8 @@
           p:entityManagerFactory-ref="entityManagerFactory"/>
 
 
-    <context:component-scan base-package="restaurant.rating.**.controller"/>
-    <jpa:repositories base-package="restaurant.rating.**.controller"/>
+    <context:component-scan base-package="restaurant.rating.**.repository"/>
+    <jpa:repositories base-package="restaurant.rating.**.repository"/>
 
 
 </beans>

@@ -3,14 +3,12 @@ package restaurant.rating.model;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.BatchSize;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.List;
-import java.util.Set;
 
 @Data
 @EqualsAndHashCode(callSuper = true, exclude = {"password", "email", "votes", "isAdmin"})
@@ -37,9 +35,15 @@ public class User extends AbstractNamedEntity {
     @OrderBy("date DESC")
     protected List<Vote> votes;
 
-    public User(Integer id, String name, String email, String password){
+    public User(Integer id, String name, String email, String password, boolean isAdmin) {
         super(id, name);
         this.email = email;
         this.password = password;
+        this.isAdmin = isAdmin;
     }
+
+    public User(User user) {
+        this(user.getId(), user.getName(), user.getEmail(), user.getPassword(), user.isAdmin());
+    }
+
 }
