@@ -1,4 +1,3 @@
-DELETE FROM USER_ROLES;
 DELETE FROM VOTES;
 DELETE FROM USERS;
 DELETE FROM DISHES;
@@ -10,14 +9,16 @@ RESTART WITH 100000;
 INSERT INTO USERS (name, email, password) VALUES
   ('User1', 'user1@yandex.ru', 'password'),
   ('User2', 'user2@yandex.ru', 'password'),
-  ('User3', 'user3@yandex.ru', 'password'),
-  ('Admin', 'admin@gmail.com', 'admin');
+  ('User3', 'user3@yandex.ru', 'password');
 
-INSERT INTO USER_ROLES (role, user_id) VALUES
-  ('ROLE_USER', 100000),
-  ('ROLE_USER', 100001),
-  ('ROLE_USER', 100002),
-  ('ROLE_ADMIN', 100003);
+INSERT INTO USERS (name, email, password, is_admin) VALUES
+  ('Admin', 'admin@gmail.com', 'admin', TRUE );
+
+-- INSERT INTO USER_ROLES (role, user_id) VALUES
+--   ('ROLE_USER', 100000),
+--   ('ROLE_USER', 100001),
+--   ('ROLE_USER', 100002),
+--   ('ROLE_ADMIN', 100003);
 
 INSERT INTO RESTAURANTS (NAME) VALUES
   ('Ёлки-Палки'), -- 100004
