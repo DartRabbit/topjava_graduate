@@ -1,4 +1,4 @@
-package restaurant.rating.repository.datajpa;
+package restaurant.rating.repository;
 
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;

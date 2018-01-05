@@ -1,43 +1,43 @@
-package restaurant.rating.repository.datajpa;
+package restaurant.rating.repository.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
 import restaurant.rating.model.User;
-import restaurant.rating.repository.UserRepository;
+import restaurant.rating.repository.CrudUserRepository;
+
 
 import java.util.List;
 
 @Repository
-public class DataJPAUserRepository implements UserRepository {
+public class DataJPAUserRepository {
 
     private static final Sort SORT_NAME_EMAIL = new Sort(Sort.Direction.ASC, "name", "email");
 
     @Autowired
-    private CrudUserRepository crudUserRepository;
+    private CrudUserRepository repository;
 
-    @Override
     public User save(User user) {
-        return crudUserRepository.save(user);
+        return repository.save(user);
     }
 
-    @Override
+    // false if not found
     public boolean delete(int id) {
-        return crudUserRepository.delete(id) != 0;
+        return repository.delete(id) != 0;
     }
 
-    @Override
+    // null if not found
     public User get(int id) {
-        return crudUserRepository.findById(id).orElse(null);
+        return repository.findById(id).orElse(null);
     }
 
-    @Override
+    // null if not found
     public User getByEmail(String email) {
-        return crudUserRepository.findByEmail(email);
+        return repository.findByEmail(email);
     }
 
-    @Override
+    // null if not found
     public List<User> getAll() {
-        return crudUserRepository.findAll(SORT_NAME_EMAIL);
+        return repository.findAll(SORT_NAME_EMAIL);
     }
 }

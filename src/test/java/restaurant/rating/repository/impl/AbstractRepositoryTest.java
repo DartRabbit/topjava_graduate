@@ -1,4 +1,4 @@
-package restaurant.rating.repository.datajpa;
+package restaurant.rating.repository.impl;
 
 
 import org.junit.runner.RunWith;
