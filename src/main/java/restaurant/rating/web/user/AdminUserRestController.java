@@ -1,4 +1,4 @@
-package restaurant.rating.web;
+package restaurant.rating.web.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -13,7 +13,7 @@ import java.net.URI;
 import java.util.List;
 
 import static restaurant.rating.util.ValidationUtil.*;
-import static restaurant.rating.web.AdminUserRestController.REST_URL;
+import static restaurant.rating.web.user.AdminUserRestController.REST_URL;
 
 @RestController
 @RequestMapping(REST_URL)

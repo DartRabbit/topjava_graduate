@@ -1,4 +1,4 @@
-package restaurant.rating.web;
+package restaurant.rating.web.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -8,7 +8,7 @@ import restaurant.rating.model.User;
 import restaurant.rating.repository.impl.DataJPAUserRepository;
 
 import static restaurant.rating.util.ValidationUtil.assureIdConsistent;
-import static restaurant.rating.web.UserProfileRestController.REST_URL;
+import static restaurant.rating.web.user.UserProfileRestController.REST_URL;
 
 @RestController
 @RequestMapping(REST_URL)
@@ -31,6 +31,4 @@ public class UserProfileRestController {
     public void update(@RequestBody User user) {
         assureIdConsistent(repository.save(user), AuthorizedUser.id());
     }
-
-
 }
