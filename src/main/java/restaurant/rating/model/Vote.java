@@ -2,23 +2,28 @@ package restaurant.rating.model;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Data
-@EqualsAndHashCode(callSuper = true, exclude = {"date", "user", "restaurant"})
+@EqualsAndHashCode(exclude = {"date", "user", "restaurant"})
+@NoArgsConstructor
 @Entity
 @Table(name = "votes", uniqueConstraints = {@UniqueConstraint(columnNames = {"date", "restaurant_id", "user_id"}, name = "vote_unique_idx")})
-public class Vote extends AbstractBaseEntity {
+public class Vote {
 
-    @Column(name = "date", nullable = false)
+    @EmbeddedId
+    private VotesId votesId;
+
+    @Column(name = "date", nullable = false, updatable = false, insertable = false)
     @NotNull
-    private LocalDateTime date;
+    private LocalDate date;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "user_id", nullable = false, updatable = false, insertable = false)
     @NotNull
     private User user;
 
@@ -26,5 +31,6 @@ public class Vote extends AbstractBaseEntity {
     @JoinColumn(name = "restaurant_id", nullable = false)
     @NotNull
     private Restaurant restaurant;
+
 
 }

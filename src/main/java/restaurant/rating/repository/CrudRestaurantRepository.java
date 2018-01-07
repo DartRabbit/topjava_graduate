@@ -3,7 +3,6 @@ package restaurant.rating.repository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -39,7 +38,7 @@ public interface CrudRestaurantRepository extends JpaRepository<Restaurant, Inte
     Restaurant findByName(String name);
 
     //@EntityGraph(attributePaths = {"dishes"}, type = EntityGraph.EntityGraphType.LOAD)
-    @Query("SELECT r FROM Restaurant r JOIN FETCH r.dishes d WHERE r.id=?1 AND d.date=?2")
+    @Query("SELECT DISTINCT r FROM Restaurant r JOIN FETCH r.dishes d WHERE r.id=?1 AND d.date=?2")
     Restaurant getWithDishes(int id, LocalDateTime dateTime);
 
     @Query("SELECT DISTINCT r FROM Restaurant r JOIN FETCH r.dishes d WHERE d.date=?1 ORDER BY r.name ASC")

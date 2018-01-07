@@ -7,7 +7,9 @@ import org.springframework.stereotype.Repository;
 import restaurant.rating.model.Restaurant;
 import restaurant.rating.repository.CrudRestaurantRepository;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 @Repository
@@ -37,15 +39,14 @@ public class DataJPARestaurantRepository {
         return repository.findAll(SORT_NAME);
     }
 
-    public List<Restaurant> getAllWithDishes(LocalDateTime dateTime) {
-        return repository.getAllWithDishes(dateTime);
-    }
-
     public List<Restaurant> getPage(Pageable pageable) {
         return repository.findAll(pageable).getContent();
     }
 
-    public Restaurant getWithDishes(int id, LocalDateTime dateTime){
-        return repository.getWithDishes(id, dateTime);
+    public List<Restaurant> getAllWithDishes(LocalDate date) {
+        return repository.getAllWithDishes(LocalDateTime.of(date, LocalTime.MIN));
+    }
+    public Restaurant getWithDishes(int id, LocalDate date){
+        return repository.getWithDishes(id, LocalDateTime.of(date, LocalTime.MIN));
     }
 }
