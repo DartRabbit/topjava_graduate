@@ -8,7 +8,7 @@ import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Data
 @EqualsAndHashCode(callSuper = true, exclude = {"restaurant", "date", "price"})
@@ -30,7 +30,7 @@ public class Dish extends AbstractNamedEntity {
 
     @Column(name = "date", nullable = false)
     @NotNull
-    private LocalDateTime date;
+    private LocalDate date;
 
     @Column(name = "price", nullable = false)
     @NotNull
