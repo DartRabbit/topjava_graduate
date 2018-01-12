@@ -15,7 +15,7 @@ import static restaurant.rating.web.user.UserProfileRestController.REST_URL;
 @RestController
 @RequestMapping(REST_URL)
 public class UserProfileRestController {
-    static final String REST_URL = "/rest/profile";
+    protected static final String REST_URL = "/rest/profile";
     private final DataJPAUserRepository repository;
 
     @Autowired

@@ -13,14 +13,13 @@ import javax.persistence.PersistenceContext;
 @Repository
 public class DataJpaVoteRepository {
     private final CrudVoteRepository repository;
+    @PersistenceContext
+    private EntityManager em;
 
     @Autowired
     public DataJpaVoteRepository(CrudVoteRepository repository) {
         this.repository = repository;
     }
-
-    @PersistenceContext
-    private EntityManager em;
 
     public Vote save(Vote vote, int restaurantId, int userId) {
         vote.setRestaurant(em.getReference(Restaurant.class, restaurantId));

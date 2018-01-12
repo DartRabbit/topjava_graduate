@@ -21,7 +21,7 @@ import static restaurant.rating.web.user.AdminUserRestController.REST_URL;
 @RestController
 @RequestMapping(REST_URL)
 public class AdminUserRestController {
-    static final String REST_URL = "/rest/admin/users";
+    protected static final String REST_URL = "/rest/admin/users";
     private final DataJPAUserRepository repository;
 
     @Autowired
