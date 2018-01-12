@@ -1,5 +1,6 @@
 package restaurant.rating.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -16,7 +17,7 @@ import java.time.LocalDate;
 public class Vote {
 
     @EmbeddedId
-    private VotesId votesId;
+    private VoteId voteId;
 
     @Column(name = "date", nullable = false, updatable = false, insertable = false)
     @NotNull
@@ -25,6 +26,7 @@ public class Vote {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false, updatable = false, insertable = false)
     @NotNull
+    @JsonIgnore
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -32,5 +34,8 @@ public class Vote {
     @NotNull
     private Restaurant restaurant;
 
-
+    public Vote(VoteId voteId, LocalDate date) {
+        this.voteId = voteId;
+        this.date = date;
+    }
 }
