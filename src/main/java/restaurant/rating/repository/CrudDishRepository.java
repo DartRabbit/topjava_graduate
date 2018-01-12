@@ -18,4 +18,6 @@ public interface CrudDishRepository extends JpaRepository<Dish, Integer> {
     @Override
     @Transactional
     Dish save(Dish dish);
+
+    Dish getById(int id);
 }

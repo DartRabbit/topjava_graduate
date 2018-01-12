@@ -20,10 +20,19 @@ import static restaurant.rating.web.restaurant.AdminRestaurantRestController.RES
 @RestController
 @RequestMapping(REST_URL)
 public class AdminDishRestController {
-    protected final Logger log = LoggerFactory.getLogger(getClass());
+    private final Logger log = LoggerFactory.getLogger(getClass());
+    private final DataJpaDishRepository repository;
 
     @Autowired
-    private DataJpaDishRepository repository;
+    AdminDishRestController(DataJpaDishRepository repository) {
+        this.repository = repository;
+    }
+
+    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Dish get(@PathVariable("id") int id) {
+        log.info("get dish{}", id);
+        return checkNotFoundWithId(repository.get(id), id);
+    }
 
     @DeleteMapping("/{restaurantId}/dish/{dishId}")
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
