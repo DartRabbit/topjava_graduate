@@ -11,6 +11,8 @@
         http://www.springframework.org/schema/cache
          http://www.springframework.org/schema/cache/spring-cache.xsd">
 
+    <import resource="spring-security.xml"/>
+
     <bean class="restaurant.rating.web.json.JacksonObjectMapper" id="objectMapper" factory-method="getMapper"/>
 
     <mvc:annotation-driven>

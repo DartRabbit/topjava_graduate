@@ -3,12 +3,15 @@ package restaurant.rating.model;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import restaurant.rating.security.Role;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Data
 @EqualsAndHashCode(callSuper = true, exclude = {"password", "email", "votes", "isAdmin"})
@@ -44,6 +47,12 @@ public class User extends AbstractNamedEntity {
 
     public User(User user) {
         this(user.getId(), user.getName(), user.getEmail(), user.getPassword(), user.isAdmin());
+    }
+
+    public Set<Role> getRoles() {
+        Set<Role> roles = new HashSet<>();
+        roles.add(isAdmin() ? Role.ROLE_ADMIN : Role.ROLE_USER);
+        return roles;
     }
 
 }

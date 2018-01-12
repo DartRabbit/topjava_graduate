@@ -20,6 +20,7 @@
         <!-- Spring -->
         <spring.version>5.0.2.RELEASE</spring.version>
         <spring-data-jpa.version>2.0.2.RELEASE</spring-data-jpa.version>
+        <spring-security.version>5.0.0.RELEASE</spring-security.version>
 
         <jackson-json.version>2.9.3</jackson-json.version>
         <lombok.version>1.16.18</lombok.version>
@@ -75,6 +76,18 @@
             <groupId>org.springframework.data</groupId>
             <artifactId>spring-data-jpa</artifactId>
             <version>${spring-data-jpa.version}</version>
+        </dependency>
+
+        <!--Security-->
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-web</artifactId>
+            <version>${spring-security.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-config</artifactId>
+            <version>${spring-security.version}</version>
         </dependency>
 
         <!-- Web -->
