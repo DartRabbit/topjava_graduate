@@ -5,7 +5,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
 import restaurant.rating.model.User;
 import restaurant.rating.repository.CrudUserRepository;
-
+import restaurant.rating.to.UserTo;
+import restaurant.rating.util.UserUtil;
 
 import java.util.List;
 
@@ -13,12 +14,20 @@ import java.util.List;
 public class DataJPAUserRepository {
 
     private static final Sort SORT_NAME_EMAIL = new Sort(Sort.Direction.ASC, "name", "email");
+    private final CrudUserRepository repository;
 
     @Autowired
-    private CrudUserRepository repository;
+    public DataJPAUserRepository(CrudUserRepository repository) {
+        this.repository = repository;
+    }
 
     public User save(User user) {
         return repository.save(user);
+    }
+
+    public User save(UserTo userTo) {
+        User user = get(userTo.getId());
+        return repository.save(UserUtil.updateFromTo(user, userTo));
     }
 
     // false if not found

@@ -1,6 +1,9 @@
 package restaurant.rating.web.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.Assert;
@@ -19,10 +22,14 @@ import static restaurant.rating.web.user.AdminUserRestController.REST_URL;
 @RequestMapping(REST_URL)
 public class AdminUserRestController {
     static final String REST_URL = "/rest/admin/users";
+    private final DataJPAUserRepository repository;
 
     @Autowired
-    private DataJPAUserRepository repository;
+    public AdminUserRestController(DataJPAUserRepository repository) {
+        this.repository = repository;
+    }
 
+    @Cacheable("users")
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<User> getAll() {
         return repository.getAll();
@@ -33,11 +40,14 @@ public class AdminUserRestController {
         return checkNotFoundWithId(repository.get(id), id);
     }
 
+    @ResponseStatus(value = HttpStatus.NO_CONTENT)
+    @CacheEvict(value = "users", allEntries = true)
     @DeleteMapping(value = "/{id}")
     public void delete(@PathVariable("id") int id) {
         checkNotFoundWithId(repository.delete(id), id);
     }
 
+    @CacheEvict(value = "users", allEntries = true)
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<User> createWithLocation(@RequestBody User user) {
         Assert.notNull(user, "user must not be null");
@@ -51,6 +61,7 @@ public class AdminUserRestController {
         return ResponseEntity.created(uriOfNewResource).body(created);
     }
 
+    @CacheEvict(value = "users", allEntries = true)
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public void update(@RequestBody User user, @PathVariable("id") int id) {
         assureIdConsistent(user, id);
