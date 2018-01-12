@@ -14,14 +14,13 @@ import javax.persistence.PersistenceContext;
 public class DataJpaDishRepository {
 
     private final CrudDishRepository repository;
+    @PersistenceContext
+    private EntityManager em;
 
     @Autowired
     public DataJpaDishRepository(CrudDishRepository repository) {
         this.repository = repository;
     }
-
-    @PersistenceContext
-    private EntityManager em;
 
     @CacheEvict(value = "restaurants", allEntries = true)
     public boolean delete(int id, int restaurantId) {
