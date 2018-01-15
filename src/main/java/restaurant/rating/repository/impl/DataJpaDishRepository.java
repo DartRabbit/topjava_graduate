@@ -33,7 +33,7 @@ public class DataJpaDishRepository {
         return repository.save(dish);
     }
 
-    public Dish get(int id) {
-        return repository.getById(id);
+    public Dish get(int id, int restaurantId) {
+        return repository.getDishByIdAndRestaurantId(id, restaurantId);
     }
 }

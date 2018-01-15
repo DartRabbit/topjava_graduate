@@ -28,10 +28,10 @@ public class AdminDishRestController {
         this.repository = repository;
     }
 
-    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Dish get(@PathVariable("id") int id) {
-        log.info("get dish{}", id);
-        return checkNotFoundWithId(repository.get(id), id);
+    @GetMapping(value = "{restaurantId}/dish/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Dish get(@PathVariable("restaurantId") int restaurantId, @PathVariable("id") int id) {
+        log.info("get dish{} from restaurant {}", id, restaurantId);
+        return checkNotFoundWithId(repository.get(id, restaurantId), id);
     }
 
     @DeleteMapping("/{restaurantId}/dish/{dishId}")
