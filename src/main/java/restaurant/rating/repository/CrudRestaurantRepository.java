@@ -11,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 import restaurant.rating.model.Restaurant;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -33,15 +32,15 @@ public interface CrudRestaurantRepository extends JpaRepository<Restaurant, Inte
     @Override
     List<Restaurant> findAll(Sort sort);
 
-    @Override
-    Page<Restaurant> findAll(Pageable pageable);
-
     Restaurant findByName(String name);
 
     //@EntityGraph(attributePaths = {"dishes"}, type = EntityGraph.EntityGraphType.LOAD)
     @Query("SELECT DISTINCT r FROM Restaurant r JOIN FETCH r.dishes d WHERE r.id=?1 AND d.date=?2")
-    Restaurant getWithDishes(int id, LocalDate date);
+    Restaurant getWithDishesByDate(int id, LocalDate date);
 
     @Query("SELECT DISTINCT r FROM Restaurant r JOIN FETCH r.dishes d WHERE d.date=?1 ORDER BY r.name ASC")
-    List<Restaurant> getAllWithDishes(LocalDate date);
+    List<Restaurant> getAllWithDishesByDate(LocalDate date);
+
+    @Query("SELECT DISTINCT r FROM Restaurant r JOIN FETCH r.votes v WHERE v.date=?1 ORDER BY r.votes.size DESC")
+    List<Restaurant> getAllWithVotesByDate(LocalDate date);
 }

@@ -24,8 +24,7 @@ import static restaurant.rating.web.restaurant.UserRestaurantRestController.REST
 @RestController
 @RequestMapping(REST_URL)
 public class UserRestaurantRestController {
-
-    static final String REST_URL = "/rest/restaurants";
+    protected static final String REST_URL = "/rest/restaurants";
     private static final LocalTime END_OF_VOTING = LocalTime.of(11, 0, 0);
     private final Logger log = LoggerFactory.getLogger(getClass());
     private final DataJPARestaurantRepository restaurantRepository;
@@ -42,7 +41,7 @@ public class UserRestaurantRestController {
         LocalDate now = LocalDate.now();
 
         if (LocalTime.now().isBefore(END_OF_VOTING)) {
-            log.info("vote for {} on {} by user {}", id, LocalDate.now(), AuthorizedUser.id());
+            log.info("vote for restaurant {} on {} by user {}", id, LocalDate.now(), AuthorizedUser.id());
             VoteId voteId = new VoteId(AuthorizedUser.id(), now);
             Vote vote = new Vote(voteId, now);
             return voteRepository.save(vote, id, AuthorizedUser.id());
@@ -59,12 +58,12 @@ public class UserRestaurantRestController {
             date = LocalDate.now();
         }
         log.info("getAllWithDishes by date {}", date);
-        return restaurantRepository.getAllWithDishes(date);
+        return restaurantRepository.getAllWithDishesByDate(date);
     }
 
     @GetMapping(value = "/with_votes", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<RestaurantWithVotes> getAllWithVotes(@RequestParam("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
         log.info("getAllWithVotes by date {}", date);
-        return convertToRestaurantWithVotes(restaurantRepository.getAllWithDishes(date), restaurantRepository.getAllWithVotes(date));
+        return convertToRestaurantWithVotes(restaurantRepository.getAllWithDishesByDate(date), restaurantRepository.getAllWithVotesByDate(date));
     }
 }

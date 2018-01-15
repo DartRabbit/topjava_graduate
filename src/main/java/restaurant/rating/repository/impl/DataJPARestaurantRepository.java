@@ -1,6 +1,8 @@
 package restaurant.rating.repository.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
@@ -12,15 +14,21 @@ import java.util.List;
 
 @Repository
 public class DataJPARestaurantRepository {
+
     public static final Sort SORT_NAME = new Sort(Sort.Direction.ASC, "name");
+    private final CrudRestaurantRepository repository;
 
     @Autowired
-    CrudRestaurantRepository repository;
+    public DataJPARestaurantRepository(CrudRestaurantRepository repository) {
+        this.repository = repository;
+    }
 
+    @CacheEvict(value = "restaurants", allEntries = true)
     public Restaurant save(Restaurant restaurant) {
         return repository.save(restaurant);
     }
 
+    @CacheEvict(value = "restaurants", allEntries = true)
     public boolean delete(int id) {
         return repository.delete(id) != 0;
     }
@@ -33,19 +41,22 @@ public class DataJPARestaurantRepository {
         return repository.findByName(name);
     }
 
+    @Cacheable("restaurants")
+    public Restaurant getWithDishesByDate(int id, LocalDate date) {
+        return repository.getWithDishesByDate(id, date);
+    }
+
+    @Cacheable("restaurants")
     public List<Restaurant> getAll() {
         return repository.findAll(SORT_NAME);
     }
 
-    public List<Restaurant> getPage(Pageable pageable) {
-        return repository.findAll(pageable).getContent();
+    @Cacheable("restaurants")
+    public List<Restaurant> getAllWithDishesByDate(LocalDate date) {
+        return repository.getAllWithDishesByDate(date);
     }
 
-    public List<Restaurant> getAllWithDishes(LocalDate date) {
-        return repository.getAllWithDishes(date);
-    }
-
-    public Restaurant getWithDishes(int id, LocalDate date) {
-        return repository.getWithDishes(id, date);
+    public List<Restaurant> getAllWithVotesByDate(LocalDate date) {
+        return repository.getAllWithVotesByDate(date);
     }
 }
