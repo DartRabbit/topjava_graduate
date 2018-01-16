@@ -61,7 +61,8 @@ CREATE TABLE VOTES
   restaurant_id INTEGER NOT NULL,
   date          DATE DEFAULT today,
   PRIMARY KEY (user_id, date),
-  FOREIGN KEY (user_id) REFERENCES USERS (id),
+  FOREIGN KEY (user_id) REFERENCES USERS (id)
+    ON DELETE CASCADE,
   FOREIGN KEY (restaurant_id) REFERENCES RESTAURANTS (id)
     ON DELETE CASCADE
 );
