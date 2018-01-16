@@ -6,15 +6,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
-import restaurant.rating.security.AuthorizedUser;
-import restaurant.rating.model.Restaurant;
 import restaurant.rating.model.Vote;
 import restaurant.rating.model.VoteId;
 import restaurant.rating.repository.impl.DataJPARestaurantRepository;
 import restaurant.rating.repository.impl.DataJpaVoteRepository;
+import restaurant.rating.security.AuthorizedUser;
 import restaurant.rating.to.RestaurantWithVotes;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 
@@ -40,7 +40,7 @@ public class UserRestaurantRestController {
     public Vote vote(@PathVariable("id") int id) {
         LocalDate now = LocalDate.now();
 
-        if (LocalTime.now().isBefore(END_OF_VOTING)) {
+        if (LocalDateTime.now().isBefore(LocalDateTime.of(now, END_OF_VOTING))) {
             log.info("vote for restaurant {} on {} by user {}", id, LocalDate.now(), AuthorizedUser.id());
             VoteId voteId = new VoteId(AuthorizedUser.id(), now);
             Vote vote = new Vote(voteId, now);
@@ -49,21 +49,12 @@ public class UserRestaurantRestController {
         return null;
     }
 
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Restaurant> getAllWithDishes(
+    @GetMapping(value = "/with_votes", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<RestaurantWithVotes> getAllWithVotes(
             @RequestParam(value = "date", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date
     ) {
-
-        if (date == null) {
-            date = LocalDate.now();
-        }
-        log.info("getAllWithDishes by date {}", date);
-        return restaurantRepository.getAllWithDishesByDate(date);
-    }
-
-    @GetMapping(value = "/with_votes", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<RestaurantWithVotes> getAllWithVotes(@RequestParam("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
-        log.info("getAllWithVotes by date {}", date);
-        return convertToRestaurantWithVotes(restaurantRepository.getAllWithDishesByDate(date), restaurantRepository.getAllWithVotesByDate(date));
+        LocalDate queryDate = date != null ? date : LocalDate.now();
+        log.info("getAllWithVotes by date {}", queryDate);
+        return convertToRestaurantWithVotes(restaurantRepository.getAllWithDishesByDate(queryDate), restaurantRepository.getAllWithVotesByDate(queryDate));
     }
 }
