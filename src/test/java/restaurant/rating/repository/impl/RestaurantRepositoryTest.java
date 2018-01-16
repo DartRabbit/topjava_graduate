@@ -1,21 +1,27 @@
 package restaurant.rating.repository.impl;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
+import org.springframework.cache.CacheManager;
 import restaurant.rating.model.Restaurant;
 
 import java.util.List;
 
-import static restaurant.rating.repository.impl.DataJPARestaurantRepository.SORT_NAME;
 import static restaurant.rating.testdata.RestaurantTestData.*;
 
 public class RestaurantRepositoryTest extends AbstractRepositoryTest {
 
-    public static final int PAGE_SIZE = 2;
+    @Autowired
+    private DataJPARestaurantRepository repository;
 
     @Autowired
-    DataJPARestaurantRepository repository;
+    private CacheManager cacheManager;
+
+    @Before
+    public void setUp() throws Exception {
+        cacheManager.getCache("restaurants").clear();
+    }
 
     @Test
     public void create() throws Exception {
@@ -62,16 +68,4 @@ public class RestaurantRepositoryTest extends AbstractRepositoryTest {
         List<Restaurant> restaurants = repository.getAll();
         assertMatch(restaurants, RESTAURANT2, RESTAURANT1, RESTAURANT3);
     }
-
-    @Test
-    public void getPage() throws Exception {
-        PageRequest request1 = PageRequest.of(0, PAGE_SIZE, SORT_NAME);
-        PageRequest request2 = PageRequest.of(1, PAGE_SIZE, SORT_NAME);
-        List<Restaurant> restaurantList1 = repository.getPage(request1);
-        List<Restaurant> restaurantList2 = repository.getPage(request2);
-
-        assertMatch(restaurantList1, RESTAURANT2, RESTAURANT1);
-        assertMatch(restaurantList2, RESTAURANT3);
-    }
-
 }

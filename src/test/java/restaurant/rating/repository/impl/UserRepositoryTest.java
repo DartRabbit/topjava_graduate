@@ -1,7 +1,9 @@
 package restaurant.rating.repository.impl;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.CacheManager;
 import restaurant.rating.model.User;
 
 import java.util.List;
@@ -10,7 +12,15 @@ import static restaurant.rating.testdata.UserTestData.*;
 public class UserRepositoryTest extends AbstractRepositoryTest {
 
     @Autowired
-    DataJPAUserRepository repository;
+    private DataJPAUserRepository repository;
+
+    @Autowired
+    private CacheManager cacheManager;
+
+    @Before
+    public void setUp() throws Exception {
+        cacheManager.getCache("users").clear();
+    }
 
     @Test
     public void create() throws Exception {
