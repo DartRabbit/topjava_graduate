@@ -3,7 +3,6 @@ package restaurant.rating.web.restaurant;
 import org.junit.Test;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
-import restaurant.rating.TestUtil;
 import restaurant.rating.model.Restaurant;
 import restaurant.rating.web.AbstractRestControllerTest;
 import restaurant.rating.web.json.JsonUtil;
@@ -87,7 +86,7 @@ public class AdminRestaurantRestControllerTest extends AbstractRestControllerTes
                 .content(JsonUtil.writeValue(expected)))
                 .andExpect(status().isCreated());
 
-        Restaurant returned = TestUtil.readFromJson(action, Restaurant.class);
+        Restaurant returned = readFromJson(action, Restaurant.class);
         expected.setId(returned.getId());
 
         assertMatch(returned, expected);
