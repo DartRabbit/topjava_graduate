@@ -1,7 +1,6 @@
 package restaurant.rating.util;
 
 import restaurant.rating.HasId;
-import restaurant.rating.model.AbstractBaseEntity;
 import restaurant.rating.util.exception.NotFoundException;
 
 public class ValidationUtil {
