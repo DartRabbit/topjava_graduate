@@ -30,7 +30,6 @@ public class AdminRestaurantRestControllerTest extends AbstractRestControllerTes
                 .andDo(print())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(contentJsonArray(RESTAURANT2, RESTAURANT1, RESTAURANT3));
-
     }
 
     @Test
