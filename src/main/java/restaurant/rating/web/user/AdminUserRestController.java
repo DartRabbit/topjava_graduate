@@ -29,7 +29,6 @@ public class AdminUserRestController {
         this.repository = repository;
     }
 
-    @Cacheable("users")
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<User> getAll() {
         return repository.getAll();
@@ -41,13 +40,11 @@ public class AdminUserRestController {
     }
 
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
-    @CacheEvict(value = "users", allEntries = true)
     @DeleteMapping(value = "/{id}")
     public void delete(@PathVariable("id") int id) {
         checkNotFoundWithId(repository.delete(id), id);
     }
 
-    @CacheEvict(value = "users", allEntries = true)
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<User> createWithLocation(@RequestBody User user) {
         Assert.notNull(user, "user must not be null");
@@ -61,7 +58,6 @@ public class AdminUserRestController {
         return ResponseEntity.created(uriOfNewResource).body(created);
     }
 
-    @CacheEvict(value = "users", allEntries = true)
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public void update(@RequestBody User user, @PathVariable("id") int id) {
         assureIdConsistent(user, id);
