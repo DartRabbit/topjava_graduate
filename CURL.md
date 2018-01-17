@@ -98,4 +98,50 @@ $ curl 'http://localhost:8080/rest/admin/restaurants/with_votes' -i -u 'admin@gm
 ```
 $ curl 'http://localhost:8080/rest/admin/restaurants/with_votes?date=2017-12-29' -i -u 'admin@gmail.com:admin'
 ```
+
+### User - Profile commands
+* Delete profile
+```
+$ curl 'http://localhost:8080/rest/profile/' -i -u 'user1@yandex.ru:password' -X DELETE
+```
 ---
+* Update profile
+```
+$ curl 'http://localhost:8080/rest/profile/' -i -u 'user1@yandex.ru:password' -X PUT \
+    -H 'Content-Type: application/json;charset=UTF-8' \
+    -d '{
+  "id" : 100000,
+  "name" : "newName",
+  "email" : "newmail@yandex.ru",
+  "password" : "newpass"
+}'
+```
+---
+* Get profile
+```
+$ curl 'http://localhost:8080/rest/profile/' -i -u 'user1@yandex.ru:password'
+```
+---
+
+### User - Restaurants commands
+* Get restaurants with dishes & votes today
+```
+$ curl 'http://localhost:8080/rest/restaurants/' -i -u 'user1@yandex.ru:password'
+```
+---
+* Get restaurants with dishes & votes by date
+```
+$ curl 'http://localhost:8080/rest/restaurants/?date=2017-12-29' -i -u 'user1@yandex.ru:password'
+```
+---
+* Vote today
+```
+$ curl 'http://localhost:8080/rest/restaurants/100004/vote' -i -u 'user1@yandex.ru:password' -X POST
+```
+---
+* Vote on date
+```
+$ curl 'http://localhost:8080/rest/restaurants/100004/vote?date=2017-12-29' -i -u 'user1@yandex.ru:password' -X POST
+```
+---
+
