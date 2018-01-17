@@ -20,5 +20,5 @@ public interface CrudDishRepository extends JpaRepository<Dish, Integer> {
     Dish save(Dish dish);
 
     @Query("SELECT d FROM Dish d WHERE d.id=:id AND d.restaurant.id=:restaurantId")
-    Dish getDishByIdAndRestaurantId(int id, int restaurantId);
+    Dish getDishByIdAndRestaurantId(@Param("id") int id, @Param("restaurantId") int restaurantId);
 }

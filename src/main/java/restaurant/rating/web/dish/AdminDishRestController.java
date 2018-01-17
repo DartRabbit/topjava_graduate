@@ -11,9 +11,13 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import restaurant.rating.model.Dish;
 import restaurant.rating.repository.impl.DataJpaDishRepository;
+import restaurant.rating.to.DishTo;
 
 import java.net.URI;
 
+import static restaurant.rating.util.DishUtil.asTo;
+import static restaurant.rating.util.DishUtil.createNewFromTo;
+import static restaurant.rating.util.DishUtil.updateFromTo;
 import static restaurant.rating.util.ValidationUtil.*;
 import static restaurant.rating.web.restaurant.AdminRestaurantRestController.REST_URL;
 
@@ -28,10 +32,10 @@ public class AdminDishRestController {
         this.repository = repository;
     }
 
-    @GetMapping(value = "{restaurantId}/dish/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Dish get(@PathVariable("restaurantId") int restaurantId, @PathVariable("id") int id) {
-        log.info("get dish{} from restaurant {}", id, restaurantId);
-        return checkNotFoundWithId(repository.get(id, restaurantId), id);
+    @GetMapping(value = "/{restaurantId}/dish/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public DishTo get(@PathVariable("restaurantId") int restaurantId, @PathVariable("id") int id) {
+        log.info("get dish {} from restaurant {}", id, restaurantId);
+        return asTo(checkNotFoundWithId(repository.get(id, restaurantId), id));
     }
 
     @DeleteMapping("/{restaurantId}/dish/{dishId}")
@@ -42,25 +46,26 @@ public class AdminDishRestController {
     }
 
     @PostMapping(value = "/{restaurantId}/dish", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Dish> createWithLocation(@PathVariable("restaurantId") int restaurantId, @RequestBody Dish dish) {
-        log.info("create dish {} for restaurant {}", dish, restaurantId);
-        Assert.notNull(dish, "dish must not be null");
-        checkNew(dish);
+    public ResponseEntity<DishTo> createWithLocation(@PathVariable("restaurantId") int restaurantId, @RequestBody DishTo dishTo) {
+        log.info("create dish {} for restaurant {}", dishTo.getName(), restaurantId);
+        Assert.notNull(dishTo, "dish must not be null");
+        checkNew(dishTo);
 
-        Dish created = repository.save(dish, restaurantId);
+        Dish created = repository.save(createNewFromTo(dishTo), restaurantId);
         String url_string = REST_URL + "/" + restaurantId + "dish";
 
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(url_string + "/{id}")
                 .buildAndExpand(created.getId()).toUri();
 
-        return ResponseEntity.created(uriOfNewResource).body(created);
+        return ResponseEntity.created(uriOfNewResource).body(asTo(created));
     }
 
     @PutMapping(value = "/{restaurantId}/dish/{dishId}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void update(@PathVariable("restaurantId") int restaurantId, @PathVariable("dishId") int dishId, @RequestBody Dish dish) {
-        log.info("update dish {} for restaurant {}", dish, restaurantId);
-        assureIdConsistent(dish, dishId);
-        repository.save(dish, restaurantId);
+    public void update(@PathVariable("restaurantId") int restaurantId, @PathVariable("dishId") int dishId, @RequestBody DishTo dishTo) {
+        log.info("update dish {} for restaurant {}", dishTo, restaurantId);
+        assureIdConsistent(dishTo, dishId);
+        Dish dish = repository.get(dishId, restaurantId);
+        repository.save(updateFromTo(dish,dishTo), restaurantId);
     }
 }

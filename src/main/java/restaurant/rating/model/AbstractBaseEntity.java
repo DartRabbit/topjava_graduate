@@ -2,6 +2,7 @@ package restaurant.rating.model;
 
 import org.hibernate.Hibernate;
 import org.springframework.data.domain.Persistable;
+import restaurant.rating.HasId;
 
 import javax.persistence.*;
 
@@ -9,7 +10,7 @@ import javax.persistence.*;
 
 // http://stackoverflow.com/questions/594597/hibernate-annotations-which-is-better-field-or-property-access
 @Access(AccessType.FIELD)
-public abstract class AbstractBaseEntity implements Persistable<Integer> {
+public abstract class AbstractBaseEntity implements Persistable<Integer>, HasId {
     public static final int START_SEQ = 100000;
 
     @Id
