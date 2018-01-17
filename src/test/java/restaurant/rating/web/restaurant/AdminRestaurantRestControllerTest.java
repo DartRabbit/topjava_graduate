@@ -8,15 +8,14 @@ import restaurant.rating.model.Restaurant;
 import restaurant.rating.web.AbstractRestControllerTest;
 import restaurant.rating.web.json.JsonUtil;
 
+import java.time.LocalDate;
+
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static restaurant.rating.TestUtil.contentJson;
-import static restaurant.rating.TestUtil.contentJsonArray;
-import static restaurant.rating.TestUtil.userHttpBasic;
+import static restaurant.rating.TestUtil.*;
 import static restaurant.rating.testdata.RestaurantTestData.*;
-import static restaurant.rating.testdata.RestaurantTestData.RESTAURANT3;
 import static restaurant.rating.testdata.UserTestData.ADMIN;
 
 public class AdminRestaurantRestControllerTest extends AbstractRestControllerTest {
@@ -51,6 +50,24 @@ public class AdminRestaurantRestControllerTest extends AbstractRestControllerTes
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(contentJson(RESTAURANT1));
+    }
+
+    @Test
+    public void testGetAllWithVotesToday() throws Exception {
+        mockMvc.perform(get(REST_URL + "with_votes")
+                .with(userHttpBasic(ADMIN)))
+                .andExpect(status().isOk())
+                .andDo(print())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON));
+    }
+
+    @Test
+    public void testGetAllWithVotesByDate() throws Exception {
+        mockMvc.perform(get(REST_URL + "with_votes?date=" + LocalDate.of(2017, 12, 29).toString())
+                .with(userHttpBasic(ADMIN)))
+                .andExpect(status().isOk())
+                .andDo(print())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON));
     }
 
     @Test
@@ -90,5 +107,4 @@ public class AdminRestaurantRestControllerTest extends AbstractRestControllerTes
 
         assertMatch(restaurantRepository.get(RESTAURANT1_ID), updated);
     }
-
 }

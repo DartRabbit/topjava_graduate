@@ -37,19 +37,20 @@ public class UserRestaurantRestController {
     }
 
     @PostMapping(value = "/{id}/vote", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Vote vote(@PathVariable("id") int id) {
-        LocalDate now = LocalDate.now();
+    public Vote vote(@PathVariable("id") int id,
+                     @RequestParam(value = "date", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
+        LocalDate voteDate = date != null ? date : LocalDate.now();
 
-        if (LocalDateTime.now().isBefore(LocalDateTime.of(now, END_OF_VOTING))) {
+        if (LocalDateTime.now().isBefore(LocalDateTime.of(voteDate, END_OF_VOTING))) {
             log.info("vote for restaurant {} on {} by user {}", id, LocalDate.now(), AuthorizedUser.id());
-            VoteId voteId = new VoteId(AuthorizedUser.id(), now);
-            Vote vote = new Vote(voteId, now);
+            VoteId voteId = new VoteId(AuthorizedUser.id(), voteDate);
+            Vote vote = new Vote(voteId, voteDate);
             return voteRepository.save(vote, id, AuthorizedUser.id());
         }
         return null;
     }
 
-    @GetMapping(value = "/with_votes", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<RestaurantWithVotes> getAllWithVotes(
             @RequestParam(value = "date", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date
     ) {
