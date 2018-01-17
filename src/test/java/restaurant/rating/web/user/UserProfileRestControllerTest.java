@@ -20,7 +20,7 @@ public class UserProfileRestControllerTest extends AbstractRestControllerTest {
     private static final String REST_URL = UserProfileRestController.REST_URL + '/';
 
     @Test
-    public void testGet() throws Exception {
+    public void testUserProfileGet() throws Exception {
         mockMvc.perform(get(REST_URL)
                 .with(userHttpBasic(USER1)))
                 .andExpect(status().isOk())
@@ -30,13 +30,13 @@ public class UserProfileRestControllerTest extends AbstractRestControllerTest {
     }
 
     @Test
-    public void testGetUnauth() throws Exception {
+    public void testUserProfileGetUnauth() throws Exception {
         mockMvc.perform(get(REST_URL))
                 .andExpect(status().isUnauthorized());
     }
 
     @Test
-    public void testDelete() throws Exception {
+    public void testUserProfileDelete() throws Exception {
         mockMvc.perform(delete(REST_URL)
                 .with(userHttpBasic(USER1)))
                 .andDo(print())
@@ -45,7 +45,7 @@ public class UserProfileRestControllerTest extends AbstractRestControllerTest {
     }
 
     @Test
-    public void testUpdate() throws Exception {
+    public void testUserProfileUpdate() throws Exception {
         UserTo updated = new UserTo(100000, "newName", "newmail@yandex.ru", "newpass");
 
         mockMvc.perform(put(REST_URL).contentType(MediaType.APPLICATION_JSON)

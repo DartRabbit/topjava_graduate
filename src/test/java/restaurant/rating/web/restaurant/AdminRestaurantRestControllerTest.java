@@ -23,7 +23,7 @@ public class AdminRestaurantRestControllerTest extends AbstractRestControllerTes
     private final static String REST_URL = AdminRestaurantRestController.REST_URL + '/';
 
     @Test
-    public void testGetAll() throws Exception {
+    public void testAdminRestaurantGetAll() throws Exception {
         mockMvc.perform(get(REST_URL)
                 .with(userHttpBasic(ADMIN)))
                 .andExpect(status().isOk())
@@ -33,7 +33,7 @@ public class AdminRestaurantRestControllerTest extends AbstractRestControllerTes
     }
 
     @Test
-    public void testGet() throws Exception {
+    public void testAdminRestaurantGet() throws Exception {
         mockMvc.perform(get(REST_URL + RESTAURANT1_ID)
                 .with(userHttpBasic(ADMIN)))
                 .andExpect(status().isOk())
@@ -43,7 +43,7 @@ public class AdminRestaurantRestControllerTest extends AbstractRestControllerTes
     }
 
     @Test
-    public void testGetByName() throws Exception {
+    public void testAdminRestaurantGetByName() throws Exception {
         mockMvc.perform(get(REST_URL + "by?name=" + RESTAURANT1.getName())
                 .with(userHttpBasic(ADMIN)))
                 .andExpect(status().isOk())
@@ -52,7 +52,7 @@ public class AdminRestaurantRestControllerTest extends AbstractRestControllerTes
     }
 
     @Test
-    public void testGetAllWithVotesToday() throws Exception {
+    public void testAdminRestaurantGetAllWithVotesToday() throws Exception {
         mockMvc.perform(get(REST_URL + "with_votes")
                 .with(userHttpBasic(ADMIN)))
                 .andExpect(status().isOk())
@@ -61,7 +61,7 @@ public class AdminRestaurantRestControllerTest extends AbstractRestControllerTes
     }
 
     @Test
-    public void testGetAllWithVotesByDate() throws Exception {
+    public void testAdminRestaurantGetAllWithVotesByDate() throws Exception {
         mockMvc.perform(get(REST_URL + "with_votes?date=" + LocalDate.of(2017, 12, 29).toString())
                 .with(userHttpBasic(ADMIN)))
                 .andExpect(status().isOk())
@@ -70,7 +70,7 @@ public class AdminRestaurantRestControllerTest extends AbstractRestControllerTes
     }
 
     @Test
-    public void testDelete() throws Exception {
+    public void testAdminRestaurantDelete() throws Exception {
         mockMvc.perform(delete(REST_URL + RESTAURANT1_ID)
                 .with(userHttpBasic(ADMIN)))
                 .andDo(print())
@@ -79,7 +79,7 @@ public class AdminRestaurantRestControllerTest extends AbstractRestControllerTes
     }
 
     @Test
-    public void testCreateWithLocation() throws Exception {
+    public void testAdminRestaurantCreate() throws Exception {
         Restaurant expected = new Restaurant(null, "Чижик-Пыжик");
         ResultActions action = mockMvc.perform(post(REST_URL)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -95,7 +95,7 @@ public class AdminRestaurantRestControllerTest extends AbstractRestControllerTes
     }
 
     @Test
-    public void testUpdate() throws Exception {
+    public void testAdminRestaurantUpdate() throws Exception {
         Restaurant updated = new Restaurant(RESTAURANT1);
         updated.setName("UpdatedName");
         mockMvc.perform(put(REST_URL + RESTAURANT1_ID)

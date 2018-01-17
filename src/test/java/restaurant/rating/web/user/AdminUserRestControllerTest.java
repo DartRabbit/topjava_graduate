@@ -21,7 +21,7 @@ public class AdminUserRestControllerTest extends AbstractRestControllerTest {
     private static final String REST_URL = AdminUserRestController.REST_URL + '/';
 
     @Test
-    public void testGetAll() throws Exception {
+    public void testAdminUserGetAll() throws Exception {
         mockMvc.perform(get(REST_URL)
                 .with(userHttpBasic(ADMIN)))
                 .andExpect(status().isOk())
@@ -31,7 +31,7 @@ public class AdminUserRestControllerTest extends AbstractRestControllerTest {
     }
 
     @Test
-    public void testGet() throws Exception {
+    public void testAdminUserGet() throws Exception {
         mockMvc.perform(get(REST_URL + USER1_ID)
                 .with(userHttpBasic(ADMIN)))
                 .andExpect(status().isOk())
@@ -41,7 +41,7 @@ public class AdminUserRestControllerTest extends AbstractRestControllerTest {
     }
 
     @Test
-    public void testDelete() throws Exception {
+    public void testAdminUserDelete() throws Exception {
         mockMvc.perform(delete(REST_URL + USER1_ID)
                 .with(userHttpBasic(ADMIN)))
                 .andDo(print())
@@ -50,7 +50,7 @@ public class AdminUserRestControllerTest extends AbstractRestControllerTest {
     }
 
     @Test
-    public void testCreateWithLocation() throws Exception {
+    public void testAdminUserCreate() throws Exception {
         User expected = new User(null, "New", "new@gmail.com", "newPass", true);
         ResultActions action = mockMvc.perform(post(REST_URL)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -66,7 +66,7 @@ public class AdminUserRestControllerTest extends AbstractRestControllerTest {
     }
 
     @Test
-    public void testUpdate() throws Exception {
+    public void testAdminUserUpdate() throws Exception {
         User updated = new User(USER1);
         updated.setName("UpdatedName");
         updated.setAdmin(true);
@@ -80,7 +80,7 @@ public class AdminUserRestControllerTest extends AbstractRestControllerTest {
     }
 
     @Test
-    public void testGetByMail() throws Exception {
+    public void testAdminUserGetByMail() throws Exception {
         mockMvc.perform(get(REST_URL + "by?email=" + ADMIN.getEmail())
                 .with(userHttpBasic(ADMIN)))
                 .andExpect(status().isOk())
