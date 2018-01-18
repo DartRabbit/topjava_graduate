@@ -4,7 +4,18 @@
 JavaOPs/topjava graduate project (restaurant rating)
 
 ---
+#### Логирование
+ - Необходимо указать переменную окружения RESTAURANT_RATING, лог будет сохраняться в ${RESTAURANT_RATING}/log/restaurant-rating.log
+ 
+---
+#### Стратегия кэширования
+ - Кэшируется полный список пользователей
+ - Кэширются рестораны со списком блюд, но без голосов. 
+
+---
 #### [CURL commands](https://github.com/DartRabbit/topjava_graduate/blob/master/CURL.md)
+
+полный список команд CURL для REST интерфейса
 
    - [Admin - User commands](https://github.com/DartRabbit/topjava_graduate/blob/master/CURL.md#admin---users-commands)
    - [Admin - Restaurant commands](https://github.com/DartRabbit/topjava_graduate/blob/master/CURL.md#admin---restaurants-commands)
