@@ -53,24 +53,6 @@ public class AdminRestaurantRestController {
         return checkNotFound(restaurantRepository.getByName(name), "name = " + name);
     }
 
-    @GetMapping(value = "/with_dishes/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Restaurant getWithDishes(
-            @PathVariable("id") int id,
-            @RequestParam(value = "date", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
-        LocalDate queryDate = date != null ? date : LocalDate.now();
-        log.info("getWithDishes {} by date {}", id, queryDate);
-        return checkNotFoundWithId(restaurantRepository.getWithDishesByDate(id, queryDate), id);
-    }
-
-    @GetMapping(value = "/with_dishes", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Restaurant> getAllWithDishes(
-            @RequestParam(value = "date", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date
-    ) {
-        LocalDate queryDate = date != null ? date : LocalDate.now();
-        log.info("getAllWithDishes by date {}", queryDate);
-        return restaurantRepository.getAllWithDishesByDate(queryDate);
-    }
-
     @GetMapping(value = "/with_votes", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<RestaurantWithVotes> getAllWithVotes(
             @RequestParam(value = "date", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date
