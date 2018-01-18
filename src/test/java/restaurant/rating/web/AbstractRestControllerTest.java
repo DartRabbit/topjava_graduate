@@ -16,6 +16,7 @@ import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.filter.CharacterEncodingFilter;
 import restaurant.rating.repository.impl.DataJPARestaurantRepository;
 import restaurant.rating.repository.impl.DataJPAUserRepository;
+import restaurant.rating.repository.impl.DataJpaDishRepository;
 import restaurant.rating.repository.impl.DataJpaVoteRepository;
 
 import javax.annotation.PostConstruct;
@@ -58,6 +59,8 @@ abstract public class AbstractRestControllerTest {
     protected DataJPARestaurantRepository restaurantRepository;
     @Autowired
     protected DataJpaVoteRepository voteRepository;
+    @Autowired
+    protected DataJpaDishRepository dishRepository;
 
     @PostConstruct
     private void postConstruct() {
