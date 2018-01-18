@@ -99,6 +99,44 @@ $ curl 'http://localhost:8080/rest/admin/restaurants/with_votes' -i -u 'admin@gm
 $ curl 'http://localhost:8080/rest/admin/restaurants/with_votes?date=2017-12-29' -i -u 'admin@gmail.com:admin'
 ```
 
+### Admin - Dishes commands
+* Get dish by id & restaurant id
+```
+$ curl 'http://localhost:8080/rest/admin/restaurants/100004/dish/100007' -i -u 'admin@gmail.com:admin'
+```
+---
+
+* Delete dish by id & restaurant id
+```
+$ curl 'http://localhost:8080/rest/admin/restaurants/100004/dish/100009' -i -u 'admin@gmail.com:admin' -X DELETE
+```
+---
+
+* Create dish on restaurant with restaurant id
+```
+$ curl 'http://localhost:8080/rest/admin/restaurants/100004/dish' -i -u 'admin@gmail.com:admin' -X POST \
+    -H 'Content-Type: application/json;charset=UTF-8' \
+    -d '{
+  "name" : "Рассольник",
+  "date" : "2017-12-29",
+  "price" : 150.0
+}'
+```
+---
+
+* Update dish by id & restaurant id
+```
+$ curl 'http://localhost:8080/rest/admin/restaurants/100004/dish/100008' -i -u 'admin@gmail.com:admin' -X PUT \
+    -H 'Content-Type: application/json;charset=UTF-8' \
+    -d '{
+  "id" : 100008,
+  "name" : "Холодец",
+  "date" : "2017-12-29",
+  "price" : 225.8
+}'
+```
+---
+
 ### User - Profile commands
 * Delete profile
 ```

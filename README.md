@@ -8,5 +8,6 @@ JavaOPs/topjava graduate project (restaurant rating)
 
    - [Admin - User commands](https://github.com/DartRabbit/topjava_graduate/blob/master/CURL.md#admin---users-commands)
    - [Admin - Restaurant commands](https://github.com/DartRabbit/topjava_graduate/blob/master/CURL.md#admin---restaurants-commands)
+   - [Admin - Dish commands](https://github.com/DartRabbit/topjava_graduate/blob/master/CURL.md#admin---dishes-commands)
    - [User - Profile commands](https://github.com/DartRabbit/topjava_graduate/blob/master/CURL.md#user---profile-commands)
    - [User - Restaurant commands](https://github.com/DartRabbit/topjava_graduate/blob/master/CURL.md#user---restaurants-commands)
