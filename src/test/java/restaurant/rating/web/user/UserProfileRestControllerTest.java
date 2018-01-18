@@ -15,6 +15,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static restaurant.rating.TestUtil.contentJson;
 import static restaurant.rating.TestUtil.userHttpBasic;
 import static restaurant.rating.testdata.UserTestData.*;
+import static restaurant.rating.util.UserUtil.asTo;
 
 public class UserProfileRestControllerTest extends AbstractRestControllerTest {
     private static final String REST_URL = UserProfileRestController.REST_URL + '/';
@@ -26,7 +27,7 @@ public class UserProfileRestControllerTest extends AbstractRestControllerTest {
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(contentJson(USER1));
+                .andExpect(contentJson(asTo(USER1)));
     }
 
     @Test
@@ -55,5 +56,4 @@ public class UserProfileRestControllerTest extends AbstractRestControllerTest {
                 .andExpect(status().isOk());
         assertMatch(userRepository.getByEmail("newmail@yandex.ru"), UserUtil.updateFromTo(new User(USER1), updated));
     }
-
 }

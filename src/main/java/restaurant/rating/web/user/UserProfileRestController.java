@@ -5,10 +5,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import restaurant.rating.security.AuthorizedUser;
-import restaurant.rating.model.User;
 import restaurant.rating.repository.impl.DataJPAUserRepository;
 import restaurant.rating.to.UserTo;
 
+import static restaurant.rating.util.UserUtil.asTo;
 import static restaurant.rating.util.ValidationUtil.assureIdConsistent;
 import static restaurant.rating.web.user.UserProfileRestController.REST_URL;
 
@@ -24,8 +24,8 @@ public class UserProfileRestController {
     }
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public User get() {
-        return repository.get(AuthorizedUser.id());
+    public UserTo get() {
+        return asTo(repository.get(AuthorizedUser.id()));
     }
 
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
