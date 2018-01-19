@@ -1,6 +1,6 @@
 package restaurant.rating.repository.impl;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Sort;
@@ -12,15 +12,11 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Repository
+@AllArgsConstructor
 public class DataJpaRestaurantRepository {
 
     public static final Sort SORT_NAME = new Sort(Sort.Direction.ASC, "name");
     private final CrudRestaurantRepository repository;
-
-    @Autowired
-    public DataJpaRestaurantRepository(CrudRestaurantRepository repository) {
-        this.repository = repository;
-    }
 
     @CacheEvict(value = "restaurants", allEntries = true)
     public Restaurant save(Restaurant restaurant) {

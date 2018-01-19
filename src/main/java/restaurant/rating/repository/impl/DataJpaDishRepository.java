@@ -1,6 +1,6 @@
 package restaurant.rating.repository.impl;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Repository;
 import restaurant.rating.model.Dish;
@@ -11,16 +11,12 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 @Repository
+@AllArgsConstructor
 public class DataJpaDishRepository {
 
     private final CrudDishRepository repository;
     @PersistenceContext
     private EntityManager em;
-
-    @Autowired
-    public DataJpaDishRepository(CrudDishRepository repository) {
-        this.repository = repository;
-    }
 
     @CacheEvict(value = "restaurants", allEntries = true)
     public boolean delete(int id, int restaurantId) {

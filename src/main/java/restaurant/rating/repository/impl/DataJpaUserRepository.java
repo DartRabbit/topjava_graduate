@@ -1,6 +1,6 @@
 package restaurant.rating.repository.impl;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Sort;
@@ -13,15 +13,11 @@ import restaurant.rating.util.UserUtil;
 import java.util.List;
 
 @Repository
+@AllArgsConstructor
 public class DataJpaUserRepository {
 
     private static final Sort SORT_NAME_EMAIL = new Sort(Sort.Direction.ASC, "name", "email");
     private final CrudUserRepository repository;
-
-    @Autowired
-    public DataJpaUserRepository(CrudUserRepository repository) {
-        this.repository = repository;
-    }
 
     @CacheEvict(value = "users", allEntries = true)
     public User save(User user) {
