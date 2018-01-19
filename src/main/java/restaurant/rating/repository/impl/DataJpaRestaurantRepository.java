@@ -12,13 +12,13 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Repository
-public class DataJPARestaurantRepository {
+public class DataJpaRestaurantRepository {
 
     public static final Sort SORT_NAME = new Sort(Sort.Direction.ASC, "name");
     private final CrudRestaurantRepository repository;
 
     @Autowired
-    public DataJPARestaurantRepository(CrudRestaurantRepository repository) {
+    public DataJpaRestaurantRepository(CrudRestaurantRepository repository) {
         this.repository = repository;
     }
 

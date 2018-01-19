@@ -14,8 +14,8 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.filter.CharacterEncodingFilter;
-import restaurant.rating.repository.impl.DataJPARestaurantRepository;
-import restaurant.rating.repository.impl.DataJPAUserRepository;
+import restaurant.rating.repository.impl.DataJpaRestaurantRepository;
+import restaurant.rating.repository.impl.DataJpaUserRepository;
 import restaurant.rating.repository.impl.DataJpaDishRepository;
 import restaurant.rating.repository.impl.DataJpaVoteRepository;
 
@@ -54,9 +54,9 @@ abstract public class AbstractRestControllerTest {
     @Autowired
     private WebApplicationContext webApplicationContext;
     @Autowired
-    protected DataJPAUserRepository userRepository;
+    protected DataJpaUserRepository userRepository;
     @Autowired
-    protected DataJPARestaurantRepository restaurantRepository;
+    protected DataJpaRestaurantRepository restaurantRepository;
     @Autowired
     protected DataJpaVoteRepository voteRepository;
     @Autowired

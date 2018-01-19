@@ -11,7 +11,7 @@ import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import restaurant.rating.model.Restaurant;
-import restaurant.rating.repository.impl.DataJPARestaurantRepository;
+import restaurant.rating.repository.impl.DataJpaRestaurantRepository;
 import restaurant.rating.to.RestaurantWithVotes;
 
 import java.net.URI;
@@ -27,10 +27,10 @@ import static restaurant.rating.web.restaurant.AdminRestaurantRestController.RES
 public class AdminRestaurantRestController {
     public static final String REST_URL = "/rest/admin/restaurants";
     private final Logger log = LoggerFactory.getLogger(getClass());
-    private final DataJPARestaurantRepository restaurantRepository;
+    private final DataJpaRestaurantRepository restaurantRepository;
 
     @Autowired
-    public AdminRestaurantRestController(DataJPARestaurantRepository restaurantRepository) {
+    public AdminRestaurantRestController(DataJpaRestaurantRepository restaurantRepository) {
         this.restaurantRepository = restaurantRepository;
     }
 

@@ -6,15 +6,15 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import restaurant.rating.model.User;
-import restaurant.rating.repository.impl.DataJPAUserRepository;
+import restaurant.rating.repository.impl.DataJpaUserRepository;
 
 @Service("userService")
 public class UserService implements UserDetailsService {
 
-    private final DataJPAUserRepository repository;
+    private final DataJpaUserRepository repository;
 
     @Autowired
-    public UserService(DataJPAUserRepository repository){
+    public UserService(DataJpaUserRepository repository){
         this.repository = repository;
     }
 

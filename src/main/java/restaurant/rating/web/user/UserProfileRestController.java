@@ -5,7 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import restaurant.rating.security.AuthorizedUser;
-import restaurant.rating.repository.impl.DataJPAUserRepository;
+import restaurant.rating.repository.impl.DataJpaUserRepository;
 import restaurant.rating.to.UserTo;
 
 import static restaurant.rating.util.UserUtil.asTo;
@@ -16,10 +16,10 @@ import static restaurant.rating.web.user.UserProfileRestController.REST_URL;
 @RequestMapping(REST_URL)
 public class UserProfileRestController {
     protected static final String REST_URL = "/rest/profile";
-    private final DataJPAUserRepository repository;
+    private final DataJpaUserRepository repository;
 
     @Autowired
-    public UserProfileRestController(DataJPAUserRepository repository) {
+    public UserProfileRestController(DataJpaUserRepository repository) {
         this.repository = repository;
     }
 

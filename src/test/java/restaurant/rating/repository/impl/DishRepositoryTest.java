@@ -18,7 +18,7 @@ public class DishRepositoryTest extends AbstractRepositoryTest {
     private DataJpaDishRepository dishRepository;
 
     @Autowired
-    private DataJPARestaurantRepository restaurantRepository;
+    private DataJpaRestaurantRepository restaurantRepository;
 
     @Autowired
     private CacheManager cacheManager;

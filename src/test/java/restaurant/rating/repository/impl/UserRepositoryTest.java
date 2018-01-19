@@ -12,7 +12,7 @@ import static restaurant.rating.testdata.UserTestData.*;
 public class UserRepositoryTest extends AbstractRepositoryTest {
 
     @Autowired
-    private DataJPAUserRepository repository;
+    private DataJpaUserRepository repository;
 
     @Autowired
     private CacheManager cacheManager;

@@ -8,7 +8,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import restaurant.rating.model.Vote;
 import restaurant.rating.model.VoteId;
-import restaurant.rating.repository.impl.DataJPARestaurantRepository;
+import restaurant.rating.repository.impl.DataJpaRestaurantRepository;
 import restaurant.rating.repository.impl.DataJpaVoteRepository;
 import restaurant.rating.security.AuthorizedUser;
 import restaurant.rating.to.RestaurantWithVotes;
@@ -27,11 +27,11 @@ public class UserRestaurantRestController {
     protected static final String REST_URL = "/rest/restaurants";
     private static final LocalTime END_OF_VOTING = LocalTime.of(11, 0, 0);
     private final Logger log = LoggerFactory.getLogger(getClass());
-    private final DataJPARestaurantRepository restaurantRepository;
+    private final DataJpaRestaurantRepository restaurantRepository;
     private final DataJpaVoteRepository voteRepository;
 
     @Autowired
-    public UserRestaurantRestController(DataJPARestaurantRepository restaurantRepository, DataJpaVoteRepository voteRepository) {
+    public UserRestaurantRestController(DataJpaRestaurantRepository restaurantRepository, DataJpaVoteRepository voteRepository) {
         this.restaurantRepository = restaurantRepository;
         this.voteRepository = voteRepository;
     }

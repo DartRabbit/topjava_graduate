@@ -13,13 +13,13 @@ import restaurant.rating.util.UserUtil;
 import java.util.List;
 
 @Repository
-public class DataJPAUserRepository {
+public class DataJpaUserRepository {
 
     private static final Sort SORT_NAME_EMAIL = new Sort(Sort.Direction.ASC, "name", "email");
     private final CrudUserRepository repository;
 
     @Autowired
-    public DataJPAUserRepository(CrudUserRepository repository) {
+    public DataJpaUserRepository(CrudUserRepository repository) {
         this.repository = repository;
     }
 

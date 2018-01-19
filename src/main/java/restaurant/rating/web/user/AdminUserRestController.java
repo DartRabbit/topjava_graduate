@@ -8,7 +8,7 @@ import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import restaurant.rating.model.User;
-import restaurant.rating.repository.impl.DataJPAUserRepository;
+import restaurant.rating.repository.impl.DataJpaUserRepository;
 
 import java.net.URI;
 import java.util.List;
@@ -20,10 +20,10 @@ import static restaurant.rating.web.user.AdminUserRestController.REST_URL;
 @RequestMapping(REST_URL)
 public class AdminUserRestController {
     protected static final String REST_URL = "/rest/admin/users";
-    private final DataJPAUserRepository repository;
+    private final DataJpaUserRepository repository;
 
     @Autowired
-    public AdminUserRestController(DataJPAUserRepository repository) {
+    public AdminUserRestController(DataJpaUserRepository repository) {
         this.repository = repository;
     }
 
