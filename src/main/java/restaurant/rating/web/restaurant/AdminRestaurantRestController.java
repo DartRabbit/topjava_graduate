@@ -11,13 +11,11 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import restaurant.rating.model.Restaurant;
 import restaurant.rating.repository.impl.DataJpaRestaurantRepository;
-import restaurant.rating.to.RestaurantWithVotes;
 
 import java.net.URI;
 import java.time.LocalDate;
 import java.util.List;
 
-import static restaurant.rating.util.RestaurantsUtil.convertToRestaurantWithVotes;
 import static restaurant.rating.util.ValidationUtil.*;
 import static restaurant.rating.web.restaurant.AdminRestaurantRestController.REST_URL;
 
@@ -48,13 +46,13 @@ public class AdminRestaurantRestController {
         return checkNotFound(restaurantRepository.getByName(name), "name = " + name);
     }
 
-    @GetMapping(value = "/with_votes", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<RestaurantWithVotes> getAllWithVotes(
+    @GetMapping(value = "/with_dishes", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<Restaurant> getAllWithDishes(
             @RequestParam(value = "date", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date
     ) {
         LocalDate queryDate = date != null ? date : LocalDate.now();
-        log.info("getAllWithVotes by date {}", queryDate);
-        return convertToRestaurantWithVotes(restaurantRepository.getAllWithDishesByDate(queryDate), restaurantRepository.getAllWithVotesByDate(queryDate));
+        log.info("getAllWithDishes by date {}", queryDate);
+        return restaurantRepository.getAllWithDishesByDate(queryDate);
     }
 
     @ResponseStatus(value = HttpStatus.NO_CONTENT)

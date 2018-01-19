@@ -5,6 +5,7 @@ import org.springframework.stereotype.Repository;
 import restaurant.rating.model.Restaurant;
 import restaurant.rating.model.User;
 import restaurant.rating.model.Vote;
+import restaurant.rating.model.VoteId;
 import restaurant.rating.repository.CrudVoteRepository;
 
 import javax.persistence.EntityManager;
@@ -21,5 +22,9 @@ public class DataJpaVoteRepository {
         vote.setRestaurant(em.getReference(Restaurant.class, restaurantId));
         vote.setUser(em.getReference(User.class, userId));
         return repository.save(vote);
+    }
+
+    public Vote get(VoteId voteId){
+        return repository.findById(voteId).orElse(null);
     }
 }

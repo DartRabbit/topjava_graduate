@@ -15,7 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 public class DataJpaRestaurantRepository {
 
-    public static final Sort SORT_NAME = new Sort(Sort.Direction.ASC, "name");
+    private static final Sort SORT_NAME = new Sort(Sort.Direction.ASC, "name");
     private final CrudRestaurantRepository repository;
 
     @CacheEvict(value = "restaurants", allEntries = true)
@@ -49,9 +49,5 @@ public class DataJpaRestaurantRepository {
     @Cacheable("restaurants")
     public List<Restaurant> getAllWithDishesByDate(LocalDate date) {
         return repository.getAllWithDishesByDate(date);
-    }
-
-    public List<Restaurant> getAllWithVotesByDate(LocalDate date) {
-        return repository.getAllWithVotesByDate(date);
     }
 }

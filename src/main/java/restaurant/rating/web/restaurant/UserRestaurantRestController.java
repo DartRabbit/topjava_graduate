@@ -4,20 +4,23 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import restaurant.rating.model.Restaurant;
 import restaurant.rating.model.Vote;
 import restaurant.rating.model.VoteId;
 import restaurant.rating.repository.impl.DataJpaRestaurantRepository;
 import restaurant.rating.repository.impl.DataJpaVoteRepository;
 import restaurant.rating.security.AuthorizedUser;
-import restaurant.rating.to.RestaurantWithVotes;
+import restaurant.rating.util.exception.NotAvailableRevoteException;
 
+import java.net.URI;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 
-import static restaurant.rating.util.RestaurantsUtil.convertToRestaurantWithVotes;
 import static restaurant.rating.web.restaurant.UserRestaurantRestController.REST_URL;
 
 @RestController
@@ -31,25 +34,30 @@ public class UserRestaurantRestController {
     private final DataJpaVoteRepository voteRepository;
 
     @PostMapping(value = "/{id}/vote", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Vote vote(@PathVariable("id") int id,
-                     @RequestParam(value = "date", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
-        LocalDate voteDate = date != null ? date : LocalDate.now();
+    public ResponseEntity<Vote> vote(@PathVariable("id") int id) {
+        LocalDate voteDate = LocalDate.now();
+        VoteId voteId = new VoteId(AuthorizedUser.id(), voteDate);
+        Vote vote = new Vote(voteId, voteDate);
 
         if (LocalDateTime.now().isBefore(LocalDateTime.of(voteDate, END_OF_VOTING))) {
             log.info("vote for restaurant {} on {} by user {}", id, LocalDate.now(), AuthorizedUser.id());
-            VoteId voteId = new VoteId(AuthorizedUser.id(), voteDate);
-            Vote vote = new Vote(voteId, voteDate);
-            return voteRepository.save(vote, id, AuthorizedUser.id());
+            Vote voteCreated = voteRepository.save(vote, id, AuthorizedUser.id());
+            return ResponseEntity.ok(voteCreated);
+        }else{
+            if(voteRepository.get(voteId)==null){
+                Vote voteCreated = voteRepository.save(vote, id, AuthorizedUser.id());
+                return ResponseEntity.ok(voteCreated);
+            }
+            throw new NotAvailableRevoteException(String.format("Revote after %s by user %d", END_OF_VOTING.toString(), AuthorizedUser.id()));
         }
-        return null;
     }
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<RestaurantWithVotes> getAllWithVotes(
+    public List<Restaurant> getAllWithDishes(
             @RequestParam(value = "date", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date
     ) {
         LocalDate queryDate = date != null ? date : LocalDate.now();
         log.info("getAllWithVotes by date {}", queryDate);
-        return convertToRestaurantWithVotes(restaurantRepository.getAllWithDishesByDate(queryDate), restaurantRepository.getAllWithVotesByDate(queryDate));
+        return restaurantRepository.getAllWithDishesByDate(queryDate);
     }
 }

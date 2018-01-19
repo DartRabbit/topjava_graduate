@@ -1,15 +1,10 @@
 package restaurant.rating.web.restaurant;
 
 import org.junit.Test;
-import org.springframework.http.MediaType;
 import restaurant.rating.web.AbstractRestControllerTest;
 
-import java.time.LocalDate;
-
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static restaurant.rating.TestUtil.userHttpBasic;
 import static restaurant.rating.testdata.RestaurantTestData.RESTAURANT1_ID;
@@ -26,31 +21,4 @@ public class UserRestaurantRestControllerTest extends AbstractRestControllerTest
                 .andExpect(status().isOk())
                 .andDo(print());
     }
-
-    @Test
-    public void testUserRestaurantVoteOnDate() throws Exception {
-        mockMvc.perform(post(REST_URL + RESTAURANT1_ID + "/vote?date=" + LocalDate.of(2017, 12, 29).toString())
-                .with(userHttpBasic(USER1)))
-                .andExpect(status().isOk())
-                .andDo(print());
-    }
-
-    @Test
-    public void testUserRestaurantGetAllWithVotesToday() throws Exception {
-        mockMvc.perform(get(REST_URL)
-                .with(userHttpBasic(USER1)))
-                .andExpect(status().isOk())
-                .andDo(print())
-                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON));
-    }
-
-    @Test
-    public void testUserRestaurantGetAllWithVotesByDate() throws Exception {
-        mockMvc.perform(get(REST_URL + "?date=" + LocalDate.of(2017, 12, 29).toString())
-                .with(userHttpBasic(USER1)))
-                .andExpect(status().isOk())
-                .andDo(print())
-                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON));
-    }
-
 }

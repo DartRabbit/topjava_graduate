@@ -38,7 +38,4 @@ public interface CrudRestaurantRepository extends JpaRepository<Restaurant, Inte
 
     @Query("SELECT DISTINCT r FROM Restaurant r JOIN FETCH r.dishes d WHERE d.date=?1 ORDER BY r.name ASC")
     List<Restaurant> getAllWithDishesByDate(LocalDate date);
-
-    @Query("SELECT DISTINCT r FROM Restaurant r JOIN FETCH r.votes v WHERE v.date=?1 ORDER BY r.votes.size DESC")
-    List<Restaurant> getAllWithVotesByDate(LocalDate date);
 }

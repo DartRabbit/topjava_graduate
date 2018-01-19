@@ -51,8 +51,8 @@ public class AdminRestaurantRestControllerTest extends AbstractRestControllerTes
     }
 
     @Test
-    public void testAdminRestaurantGetAllWithVotesToday() throws Exception {
-        mockMvc.perform(get(REST_URL + "with_votes")
+    public void testAdminRestaurantGetAllWithDishesToday() throws Exception {
+        mockMvc.perform(get(REST_URL + "with_dishes")
                 .with(userHttpBasic(ADMIN)))
                 .andExpect(status().isOk())
                 .andDo(print())
@@ -60,8 +60,8 @@ public class AdminRestaurantRestControllerTest extends AbstractRestControllerTes
     }
 
     @Test
-    public void testAdminRestaurantGetAllWithVotesByDate() throws Exception {
-        mockMvc.perform(get(REST_URL + "with_votes?date=" + LocalDate.of(2017, 12, 29).toString())
+    public void testAdminRestaurantGetAllWithDishesByDate() throws Exception {
+        mockMvc.perform(get(REST_URL + "with_dishes?date=" + LocalDate.of(2017, 12, 29).toString())
                 .with(userHttpBasic(ADMIN)))
                 .andExpect(status().isOk())
                 .andDo(print())
