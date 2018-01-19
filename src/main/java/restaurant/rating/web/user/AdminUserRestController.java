@@ -1,6 +1,7 @@
 package restaurant.rating.web.user;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -17,29 +18,29 @@ import static restaurant.rating.util.ValidationUtil.*;
 import static restaurant.rating.web.user.AdminUserRestController.REST_URL;
 
 @RestController
+@Slf4j
+@AllArgsConstructor
 @RequestMapping(REST_URL)
 public class AdminUserRestController {
     protected static final String REST_URL = "/rest/admin/users";
     private final DataJpaUserRepository repository;
 
-    @Autowired
-    public AdminUserRestController(DataJpaUserRepository repository) {
-        this.repository = repository;
-    }
-
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<User> getAll() {
+        log.info("get all users");
         return repository.getAll();
     }
 
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public User get(@PathVariable("id") int id) {
+        log.info("get users {}", id);
         return checkNotFoundWithId(repository.get(id), id);
     }
 
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     @DeleteMapping(value = "/{id}")
     public void delete(@PathVariable("id") int id) {
+        log.info("delete user {}", id);
         checkNotFoundWithId(repository.delete(id), id);
     }
 
@@ -48,7 +49,7 @@ public class AdminUserRestController {
         Assert.notNull(user, "user must not be null");
         checkNew(user);
         User created = repository.save(user);
-
+        log.info("create user {}", user.getEmail());
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(REST_URL + "/{id}")
                 .buildAndExpand(created.getId()).toUri();
@@ -58,6 +59,7 @@ public class AdminUserRestController {
 
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public void update(@RequestBody User user, @PathVariable("id") int id) {
+        log.info("update user {}", id);
         assureIdConsistent(user, id);
         repository.save(user);
     }

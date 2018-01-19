@@ -1,8 +1,7 @@
 package restaurant.rating.web.restaurant;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -22,19 +21,14 @@ import static restaurant.rating.util.RestaurantsUtil.convertToRestaurantWithVote
 import static restaurant.rating.web.restaurant.UserRestaurantRestController.REST_URL;
 
 @RestController
+@Slf4j
+@AllArgsConstructor
 @RequestMapping(REST_URL)
 public class UserRestaurantRestController {
     protected static final String REST_URL = "/rest/restaurants";
     private static final LocalTime END_OF_VOTING = LocalTime.of(11, 0, 0);
-    private final Logger log = LoggerFactory.getLogger(getClass());
     private final DataJpaRestaurantRepository restaurantRepository;
     private final DataJpaVoteRepository voteRepository;
-
-    @Autowired
-    public UserRestaurantRestController(DataJpaRestaurantRepository restaurantRepository, DataJpaVoteRepository voteRepository) {
-        this.restaurantRepository = restaurantRepository;
-        this.voteRepository = voteRepository;
-    }
 
     @PostMapping(value = "/{id}/vote", produces = MediaType.APPLICATION_JSON_VALUE)
     public Vote vote(@PathVariable("id") int id,

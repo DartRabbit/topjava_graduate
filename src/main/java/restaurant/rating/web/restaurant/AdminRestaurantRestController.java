@@ -1,8 +1,7 @@
 package restaurant.rating.web.restaurant;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -23,16 +22,12 @@ import static restaurant.rating.util.ValidationUtil.*;
 import static restaurant.rating.web.restaurant.AdminRestaurantRestController.REST_URL;
 
 @RestController
+@Slf4j
+@AllArgsConstructor
 @RequestMapping(REST_URL)
 public class AdminRestaurantRestController {
     public static final String REST_URL = "/rest/admin/restaurants";
-    private final Logger log = LoggerFactory.getLogger(getClass());
     private final DataJpaRestaurantRepository restaurantRepository;
-
-    @Autowired
-    public AdminRestaurantRestController(DataJpaRestaurantRepository restaurantRepository) {
-        this.restaurantRepository = restaurantRepository;
-    }
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Restaurant> getAll() {
