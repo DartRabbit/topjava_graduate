@@ -4,13 +4,14 @@ import restaurant.rating.model.Dish;
 import restaurant.rating.to.DishTo;
 
 public class DishUtil {
+    private static final int DIVIDER = 100;
 
     public static int convertPriceToInt(double price){
-        return (int)(price*100);
+        return (int)(price*DIVIDER);
     }
 
     public static double convertPriceToDouble(double price){
-        return price/100;
+        return price/DIVIDER;
     }
 
     public static Dish createNewFromTo(DishTo newDish) {
