@@ -6,7 +6,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import restaurant.rating.model.Restaurant;
 import restaurant.rating.model.Vote;
 import restaurant.rating.model.VoteId;
@@ -15,7 +14,6 @@ import restaurant.rating.repository.impl.DataJpaVoteRepository;
 import restaurant.rating.security.AuthorizedUser;
 import restaurant.rating.util.exception.NotAvailableRevoteException;
 
-import java.net.URI;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;

@@ -1,8 +1,6 @@
 package restaurant.rating.repository.impl;
 
 import lombok.AllArgsConstructor;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
 import restaurant.rating.model.User;
