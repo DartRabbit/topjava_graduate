@@ -1,9 +1,7 @@
 package restaurant.rating.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -11,9 +9,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
-@Data
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = true, exclude = {"restaurant", "date", "price"})
 @Entity
 @Table(
         name = "dishes",
@@ -28,14 +24,20 @@ public class Dish extends AbstractNamedEntity {
     @OnDelete(action = OnDeleteAction.CASCADE)
     @NotNull
     @JsonIgnore
+    @Getter
+    @Setter
     private Restaurant restaurant;
 
     @Column(name = "date", nullable = false)
     @NotNull
+    @Getter
+    @Setter
     private LocalDate date;
 
     @Column(name = "price", nullable = false)
     @NotNull
+    @Getter
+    @Setter
     private Integer price;
 
     public Dish(Integer id, String name, LocalDate date, Integer price) {
