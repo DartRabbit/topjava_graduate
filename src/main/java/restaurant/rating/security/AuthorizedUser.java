@@ -6,6 +6,9 @@ import restaurant.rating.model.User;
 import restaurant.rating.to.UserTo;
 import restaurant.rating.util.UserUtil;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import static java.util.Objects.requireNonNull;
 
 public class AuthorizedUser extends org.springframework.security.core.userdetails.User{
@@ -13,7 +16,7 @@ public class AuthorizedUser extends org.springframework.security.core.userdetail
     private final UserTo userTo;
 
     public AuthorizedUser(User user) {
-        super(user.getEmail(),user.getPassword(), true, true ,true, true, user.getRoles());
+        super(user.getEmail(),user.getPassword(), true, true ,true, true, getRoles(user));
         this.userTo = UserUtil.asTo(user);
     }
 
@@ -36,4 +39,9 @@ public class AuthorizedUser extends org.springframework.security.core.userdetail
         return get().userTo.getId();
     }
 
+    public static Set<Role> getRoles(User user) {
+        Set<Role> roles = new HashSet<>();
+        roles.add(user.isAdmin() ? Role.ROLE_ADMIN : Role.ROLE_USER);
+        return roles;
+    }
 }
