@@ -9,16 +9,25 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static restaurant.rating.TestUtil.userHttpBasic;
 import static restaurant.rating.testdata.RestaurantTestData.RESTAURANT1_ID;
 import static restaurant.rating.testdata.UserTestData.USER1;
+import static restaurant.rating.testdata.UserTestData.USER4;
 
 public class UserRestaurantRestControllerTest extends AbstractRestControllerTest {
 
     private final static String REST_URL = UserRestaurantRestController.REST_URL + '/';
 
     @Test
-    public void testUserRestaurantVoteToday() throws Exception {
+    public void testUserRestaurantVoteTodaySuccess() throws Exception {
+        mockMvc.perform(post(REST_URL + RESTAURANT1_ID + "/vote")
+                .with(userHttpBasic(USER4)))
+                .andExpect(status().isOk())
+                .andDo(print());
+    }
+
+    @Test
+    public void testUserRestaurantVoteTodayFail() throws Exception {
         mockMvc.perform(post(REST_URL + RESTAURANT1_ID + "/vote")
                 .with(userHttpBasic(USER1)))
-                .andExpect(status().isOk())
+                .andExpect(status().isNotAcceptable())
                 .andDo(print());
     }
 }

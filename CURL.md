@@ -89,14 +89,14 @@ $ curl 'http://localhost:8080/rest/admin/restaurants/100004' -i -u 'admin@gmail.
 $ curl 'http://localhost:8080/rest/admin/restaurants/by?name=%D0%81%D0%BB%D0%BA%D0%B8-%D0%9F%D0%B0%D0%BB%D0%BA%D0%B8' -i -u 'admin@gmail.com:admin
 ```
 ---
-* Get restaurants with votes & dishes today
+* Get restaurants with dishes today
 ```
-$ curl 'http://localhost:8080/rest/admin/restaurants/with_votes' -i -u 'admin@gmail.com:admin'
+$ curl 'http://localhost:8080/rest/admin/restaurants/with_dishes' -i -u 'admin@gmail.com:admin'
 ```
 ---
-* Get restaurants with votes & dishes by date
+* Get restaurants with dishes by date
 ```
-$ curl 'http://localhost:8080/rest/admin/restaurants/with_votes?date=2017-12-29' -i -u 'admin@gmail.com:admin'
+$ curl 'http://localhost:8080/rest/admin/restaurants/with_dishes?date=2017-12-29' -i -u 'admin@gmail.com:admin'
 ```
 
 ### Admin - Dishes commands
@@ -162,19 +162,44 @@ $ curl 'http://localhost:8080/rest/profile/' -i -u 'user1@yandex.ru:password'
 ---
 
 ### User - Restaurants commands
-* Get restaurants with dishes & votes today
-```
-$ curl 'http://localhost:8080/rest/restaurants/' -i -u 'user1@yandex.ru:password'
-```
----
-* Get restaurants with dishes & votes by date
-```
-$ curl 'http://localhost:8080/rest/restaurants/?date=2017-12-29' -i -u 'user1@yandex.ru:password'
-```
----
-* Vote today
+
+* Vote today fail
 ```
 $ curl 'http://localhost:8080/rest/restaurants/100004/vote' -i -u 'user1@yandex.ru:password' -X POST
+```
+```
+HTTP/1.1 406 Not Acceptable
+ache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-XSS-Protection: 1; mode=block
+X-Frame-Options: DENY
+X-Content-Type-Options: nosniff
+```
+---
+* Vote today success
+```
+$ curl 'http://localhost:8080/rest/restaurants/100005/vote' -i -u 'user4@yandex.ru:password' -X POST
+```
+```
+HTTP/1.1 200 OK
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-XSS-Protection: 1; mode=block
+X-Frame-Options: DENY
+X-Content-Type-Options: nosniff
+Content-Type: application/json;charset=UTF-8
+Content-Length: 126
+
+{
+  "voteId" : {
+    "userId" : 100003,
+    "date" : "2018-01-19"
+  },
+  "date" : "2018-01-19",
+  "restaurant" : null
+}
 ```
 ---
 * Vote on date

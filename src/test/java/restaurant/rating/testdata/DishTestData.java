@@ -9,9 +9,9 @@ import static restaurant.rating.model.AbstractBaseEntity.START_SEQ;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class DishTestData {
-    public static final int DISH1_ID = START_SEQ + 7;
-    public static final int DISH2_ID = START_SEQ + 8;
-    public static final int DISH3_ID = START_SEQ + 9;
+    public static final int DISH1_ID = START_SEQ + 8;
+    public static final int DISH2_ID = START_SEQ + 9;
+    public static final int DISH3_ID = START_SEQ + 10;
     public static final LocalDate DISHES_DATE = LocalDate.of(2017, 12, 29);
 
     public static final Dish DISH1 = new Dish(DISH1_ID, "Оливье", DISHES_DATE, 13025);

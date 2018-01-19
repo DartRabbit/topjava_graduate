@@ -9,9 +9,9 @@ import static restaurant.rating.model.AbstractBaseEntity.START_SEQ;
 
 public class RestaurantTestData {
 
-    public static final int RESTAURANT1_ID = START_SEQ + 4;
-    public static final int RESTAURANT2_ID = START_SEQ + 5;
-    public static final int RESTAURANT3_ID = START_SEQ + 6;
+    public static final int RESTAURANT1_ID = START_SEQ + 5;
+    public static final int RESTAURANT2_ID = START_SEQ + 6;
+    public static final int RESTAURANT3_ID = START_SEQ + 7;
 
     public static final Restaurant RESTAURANT1 = new Restaurant(RESTAURANT1_ID,"Ёлки-Палки");
     public static final Restaurant RESTAURANT2 = new Restaurant(RESTAURANT2_ID,"Fourth Michelin Star");
