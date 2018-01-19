@@ -5,8 +5,8 @@
     <jmxConfigurator/>
 
     <appender name="file" class="ch.qos.logback.core.FileAppender">
-        <file>${RESTAURANT_RATING}/log/restaurant-rating.log</file>
-
+        <!--<file>${RESTAURANT_RATING}/log/restaurant-rating.log</file>-->
+        <file>log/restaurant-rating.log</file>
         <encoder>
             <charset>UTF-8</charset>
             <pattern>%date %-5level %logger{50}.%M:%L - %msg%n</pattern>
