@@ -9,7 +9,7 @@ import java.time.LocalDate;
 
 @NoArgsConstructor
 @Entity
-@Table(name = "votes", uniqueConstraints = {@UniqueConstraint(columnNames = {"date", "restaurant_id", "user_id"}, name = "vote_unique_idx")})
+@Table(name = "votes", uniqueConstraints = {@UniqueConstraint(columnNames = {"user_id", "date"}, name = "vote_unique_idx")})
 @EqualsAndHashCode(of = {"voteId"})
 public class Vote {
 
